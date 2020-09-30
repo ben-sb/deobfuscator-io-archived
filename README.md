@@ -73,4 +73,4 @@ a();
 
 ### To Run
 Put the obfuscated script in source/obfuscated.js and run:<br/>
-npm start
+**npm start**
