@@ -1,6 +1,9 @@
 # A JavaScript deobfuscator for [obfuscator.io](https://obfuscator.io/)
 
-**Features**
+A (partial) deobfuscator for obfuscator.io, feel free to use it.
+I may add more features at some point.
+
+**Current Features**
 * Reverses string array obfuscation
 * Reverses rotated and shuffled string array obfuscation
 * Removes string array wrapper chained calls
