@@ -1,7 +1,7 @@
 # A JavaScript deobfuscator for [obfuscator.io](https://obfuscator.io/)
 
 A (incomplete) deobfuscator for scripts obfuscated with obfuscator.io, feel free to use it.<br/>
-I may add more features at some point.
+I may add more features or clean the code up at some point.
 
 ### Current Features
 * Reverses string array obfuscation
