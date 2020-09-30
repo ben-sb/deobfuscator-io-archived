@@ -63,8 +63,7 @@ _0x4e3536();
 Deobfuscated script
 ```
 function a() {
-    var b = b,
-        c = {};
+    var c = {};
     c.CKtQa = 'Hello World!';
     var d = c;
     console.log(d.CKtQa);
