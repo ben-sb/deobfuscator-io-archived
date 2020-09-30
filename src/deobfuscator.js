@@ -67,6 +67,7 @@ esprima.parseScript(source, {}, (node, meta) => {
         }
     }
 });
+console.log('Reversed string obfuscation');
 
 
 // unescape all strings
@@ -80,6 +81,7 @@ esprima.parseScript(source, {}, (node, meta) => {
         }
     }
 });
+console.log('Unescaped strings');
 
 
 // remove any self defending expressions that have now been unveiled
@@ -106,6 +108,7 @@ esprima.parseScript(source, {}, (node, meta) => {
         editedSource = editedSource.replace(nodeSource, mappings[node.name]);
     }
 });
+console.log('Cleaned up variable names');
 
 
 // clean up the look of the code, e.g. replace window['chrome'] with window.chrome
@@ -114,3 +117,4 @@ editedSource = editedSource.replace(/\[\.([\w\d_$]+)\]/gi, '\[\[\'$1\'\]\]') // 
 
 
 fs.writeFileSync('output/deobfuscated.js', beautify(editedSource));
+console.log('Wrote deobfuscated file to output/deobfuscated.js');
