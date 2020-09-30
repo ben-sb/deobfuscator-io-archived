@@ -1,6 +1,6 @@
 # A JavaScript deobfuscator for [obfuscator.io](https://obfuscator.io/)
 
-A (partial) deobfuscator for obfuscator.io, feel free to use it.
+A (partial) deobfuscator for scripts obfuscated with obfuscator.io, feel free to use it.
 I may add more features at some point.
 
 **Current Features**
