@@ -1,0 +1,18 @@
+{
+  "name": "deobfuscator-io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node deobfuscator.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esprima": "^4.0.1"
+  },
+  "dependencies": {
+    "js-beautify": "^1.13.0"
+  }
+}
