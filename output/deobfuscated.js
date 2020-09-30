@@ -1,4 +1,7 @@
 function a() {
-    console.log('Hello World!');
+    var c = {};
+    c.CKtQa = 'Hello World!';
+    var d = c;
+    console.log(d.CKtQa);
 }
 a();
