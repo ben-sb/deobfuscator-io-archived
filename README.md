@@ -1,9 +1,10 @@
 # A JavaScript deobfuscator for [obfuscator.io](https://obfuscator.io/)
 
-A (partial) deobfuscator for scripts obfuscated with obfuscator.io, feel free to use it.
+A (partial) deobfuscator for scripts obfuscated with obfuscator.io, feel free to use it.<br/>
 I may add more features at some point.
 
 ### To Run
+Put the obfuscated script in source/obfuscated.js and run:<br/>
 npm start
 
 ### Current Features
