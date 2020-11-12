@@ -1,1 +1,0 @@
-function hi(){var _0x9b2826='Hello World';console['log'](_0x9b2826);}hi();

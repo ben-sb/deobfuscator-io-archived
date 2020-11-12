@@ -124,7 +124,6 @@ esprima.parseScript(source, {}, (node, meta) => {
     }
 });
 console.log('Reversed string obfuscation');
-fs.writeFileSync('test.js', editedSource);
 
 
 // unescape all strings
