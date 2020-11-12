@@ -4,8 +4,9 @@ A (incomplete) deobfuscator for scripts obfuscated with obfuscator.io, feel free
 I may add more features or clean the code up at some point.
 
 ### Current Features
-* Reverses string array obfuscation
+* Reverses string array obfuscation, supports None, Base64 and RC4 encoding
 * Reverses rotated and shuffled string array obfuscation
+* Removes both variable and function string array wrappers
 * Removes string array wrapper chained calls
 * Will remove self defending calls (that prevent you from beautifying the obfuscated script)
 * Simplifies the nasty \_0x23b78c variable names to something more readable
