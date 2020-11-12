@@ -40,26 +40,82 @@ eval(shiftSource);
 editedSource = editedSource.substring(startIndex);
 
 
-// detect and replace string obfuscation function reassignments
+// detect and replace string obfuscation function wrappers, these
+// can be either variable or multiple functions
+let functionWrapperIncrement = 0;
 let replaced = true;
 while (replaced) {
     replaced = false;
     let source = editedSource;
     esprima.parseScript(source, {}, (node, meta) => {
-        if (utils.isArrayShifterReassignment(node, functionName)) {
+        if (utils.isStringArrayVariableWrapper(node, functionName)) {
             let re = new RegExp(node.declarations[0].id.name, 'g');
             editedSource = editedSource.replace(re, functionName);
+            replaced = true;
+        } else if (utils.isStringArrayFunctionWrapper(node, functionName)) {
+            let nodeSource = source.substring(meta.start.offset, meta.end.offset);
+
+            let arg = node.init.body.body[0].argument.arguments[0];
+            let increment = 0;
+            if (arg.right.type == 'Literal') {
+                increment = eval(arg.operator + arg.right.raw);
+            } else if (arg.right.type == 'UnaryExpression') {
+                increment = node.init.body.body[0].argument.arguments[0].right.argument.value;
+            }
+            if (increment != 0 && functionWrapperIncrement != 0 && increment != functionWrapperIncrement) {
+                console.log('Control flow flattening not supported');
+                process.exit(0);
+            }
+            functionWrapperIncrement = increment;
+
+            var nextChar = source[meta.end.offset];
+            var replacement = nextChar == ';' ? 'test = true;' : '';
+
+            let re = new RegExp(node.id.name, 'g');
+            editedSource = editedSource.replace(nodeSource + nextChar, replacement);
+            editedSource = editedSource.replace(re, functionName);
+
             replaced = true;
         }
     });
 }
+console.log('Removed string array wrappers');
 
 
 // undo string obfuscation
 source = editedSource;
 esprima.parseScript(source, {}, (node, meta) => {
     if (utils.isStringUse(node, functionName)) {
-        let res = eval(`${functionName}(${node.arguments[0].value})`);
+
+        let evalStr;
+        if (node.arguments.length == 1) {
+            let argument;
+            if (node.arguments[0].type == 'Literal') {
+                argument = node.arguments[0].value;
+            } else if (node.arguments[0].type == 'UnaryExpression') {
+                argument = node.arguments[0].operator + node.arguments[0].argument.raw;
+            }
+            argument = `${argument} + ${functionWrapperIncrement}`;
+            evalStr = `${functionName}(${argument})`;
+
+        } else if (node.arguments.length == 2) { // RC4 encoding
+            let arg1;
+            if (node.arguments[0].type == 'Literal') {
+                arg1 = node.arguments[0].value;
+            } else if (node.arguments[0].type == 'UnaryExpression') {
+                arg1 = node.arguments[0].operator + node.arguments[0].argument.raw;
+            }
+            arg1 = `${arg1} + ${functionWrapperIncrement}`;
+
+            let arg2 = node.arguments[1].raw;
+            evalStr = `${functionName}(${arg1}, ${arg2})`;
+        }
+
+        let res;
+        try {
+            res = eval(evalStr);
+        } catch {}
+
         if (res) {
             let nodeSource = source.substring(meta.start.offset, meta.end.offset);
             let string = unescape(res).replace(/'/g, "\\'");
@@ -68,6 +124,7 @@ esprima.parseScript(source, {}, (node, meta) => {
     }
 });
 console.log('Reversed string obfuscation');
+fs.writeFileSync('test.js', editedSource);
 
 
 // unescape all strings

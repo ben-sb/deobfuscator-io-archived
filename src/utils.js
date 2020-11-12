@@ -11,16 +11,28 @@ module.exports = {
         && (node.init.body.body[0].expression.right && node.init.body.body[0].expression.right.type == 'BinaryExpression');
     },
 
-    isArrayShifterReassignment: function(node, functionName) {
+    isStringArrayVariableWrapper: function(node, functionNames) {
         return (node.type == 'VariableDeclaration' && node.declarations)
         && (node.declarations[0].init && node.declarations[0].init.type == 'Identifier')
-        && (node.declarations[0].id.name != functionName && node.declarations[0].init.name == functionName);
+        && (!functionNames.includes(node.declarations[0].id.name) && functionNames.includes(node.declarations[0].init.name));
     },
 
-    isStringUse: function(node, functionName) {
+    isStringArrayFunctionWrapper: function(node, functionName) {
+        return (node.type == 'VariableDeclarator')
+        && (node.id && node.id.type == 'Identifier')
+        && (node.init && node.init.type == 'FunctionExpression')
+        && (node.init.params && node.init.params.length == 2)
+        && (node.init.body && node.init.body.type == 'BlockStatement')
+        && (node.init.body.body[0] && node.init.body.body[0].type == 'ReturnStatement')
+        && (node.init.body.body[0].argument && node.init.body.body[0].argument.type == 'CallExpression')
+        && (node.init.body.body[0].argument.callee && node.init.body.body[0].argument.callee.type == 'Identifier')
+        && (node.init.body.body[0].argument.callee.name == functionName);
+    },
+
+    isStringUse: function(node, functionNames) {
         return (node.type == 'CallExpression')
         && (node.callee && node.callee.type == 'Identifier')
-        && (node.callee.name == functionName)
+        && (functionNames.includes(node.callee.name))
         && (node.arguments);
     },
 
