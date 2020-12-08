@@ -131,7 +131,7 @@ source = editedSource;
 esprima.parseScript(source, {}, (node, meta) => {
     if (node.type == 'Literal' && typeof node.value == 'string' && node.value != node.raw) {
         if (node.value != '\n') {
-            let string = eval(node.raw).replace(/'/g, "\\'");
+            let string = eval(node.raw).replace(/'/g, "\\'").replace(/\n/g, '\\n');
             let nodeSource = source.substring(meta.start.offset, meta.end.offset);
             editedSource = editedSource.replace(nodeSource, `'${string}'`);
         }
