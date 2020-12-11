@@ -168,7 +168,7 @@ console.log('Cleaned up variable names');
 
 
 // clean up the look of the code, e.g. replace window['chrome'] with window.chrome
-editedSource = editedSource.replace(/(\[("|')([\w\d_$]+)("|')\])/g, '.$3');
+editedSource = editedSource.replace(/\[(?:"|')([\w\d_$]+)(?:"|')\]/g, '.$1');
 editedSource = editedSource.replace(/\[\.([\w\d_$]+)\]/gi, '\[\[\'$1\'\]\]') // reverses any accidental damage we did with the line above
 
 
