@@ -1,10 +1,10 @@
 # A JavaScript deobfuscator for [obfuscator.io](https://obfuscator.io/)
 
-### Update
-obfuscator.io have added some new features and while still pretty trivial to reverse I do not plan on updating this repository. If you really need something deobfuscated contact me on Discord sd#1000
-
 A (incomplete) deobfuscator for scripts obfuscated with obfuscator.io, feel free to use it.<br/>
 I may add more features or clean the code up at some point.
+
+### Update
+obfuscator.io have added some new features and while still pretty trivial to reverse I do not plan on updating this repository. If you really need something deobfuscated contact me on Discord sd#1000
 
 ### Current Features
 * Reverses string array obfuscation, supports None, Base64 and RC4 encoding
